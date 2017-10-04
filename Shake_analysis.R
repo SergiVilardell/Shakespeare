@@ -68,3 +68,32 @@ plot(total.words, unique.words, xlab = "N", ylab = "V")
 ggplot(shakespeare)+
   geom_point(aes(x = N.t, y = V.t, colour = as.factor(year)), size = 2.5)
 
+
+
+# Analyze each title 
+
+a <-  shakespeare[1,] %>% 
+  unnest_tokens(word, text)
+
+words <- a[,"word"]
+vocab <- c()
+V <- list()
+
+for(i in 1:length(words)){
+  if(!(words[i] %in% vocab )){
+    vocab <- append(vocab, words[i])
+   
+  }
+  V[i] = length(vocab)
+}
+
+plot(unlist(V))
+
+
+
+
+
+
+
+
+write.csv(shakespeare, file = "shakespeare.csv", row.names = F)
